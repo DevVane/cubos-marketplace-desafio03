@@ -22,7 +22,8 @@ export default function Perfil() {
   const { token, usuario, setUsuario } = useAuthContext();
 
   async function carregarUsuario() {
-
+    setCarregando(true);
+    setErro('');
     try {
       const resposta = await fetch('https://desafio-m03.herokuapp.com/perfil', {
             method: 'GET',
@@ -33,17 +34,17 @@ export default function Perfil() {
           });
         
         const usuarioApi = await resposta.json();
-
+        
+        setCarregando(false);
         
         if(!resposta.ok){
             setErro(usuarioApi);
             return;
         }
-      console.log(usuarioApi);
+      
       setUsuario(usuarioApi);
 
     } catch (error) {
-      console.log(error.message);
       setErro(error.message);
     }
   }
@@ -58,38 +59,38 @@ export default function Perfil() {
       <NavBar/>
       
       <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Typography variant="h3">
-          {usuario.nome_loja}
-        </Typography>
-        <Typography variant="h4">
-          Perfil
-        </Typography>
-        
-        <form 
-            className={classes.root}
+        <div className={classes.toolbar} >
+          <Typography variant="h3">
+            {usuario.nome_loja}
+          </Typography>
+          <Typography variant="h4">
+            Perfil
+          </Typography>
+          
+          <form 
+            className={classes.toolbar}
             noValidate
             autoComplete="off"
-            
-        >
+              
+          >
             <div className={classes.inputs}>
               <TextField label="Seu nome"  value={usuario.nome} disabled />
               <TextField label="Nome da loja" value={usuario.nome_loja} disabled />
               <TextField label="Email" value={usuario.email} disabled />
-            
-
-              <Divider/>
-              
-              <Button variant="contained" color="primary" size="small"  onClick={() => history.push("/perfil/editar")}>
-                  Editar perfil
-              </Button>
+          
             </div>
-                
-            
-        </form>
 
-        {erro && <Alert severity="error">{erro}</Alert>}
-        {carregando && <CircularProgress />}
+            <Divider/>
+            {erro && <Alert severity="error">{erro}</Alert>}
+            {carregando && <CircularProgress />}
+
+            <Button variant="contained" color="primary" size="small"  onClick={() => history.push("/perfil/editar")}>
+              Editar perfil
+            </Button>   
+              
+          </form>
+        </div>
+          
         
       </main>
     </div>

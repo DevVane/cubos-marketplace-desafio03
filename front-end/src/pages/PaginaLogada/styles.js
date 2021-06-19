@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     maxWidth: 233,
+    borderRadius: 10,
   },
   media: {
     height: 240,
@@ -30,6 +31,11 @@ const useStyles = makeStyles((theme) => ({
   },
   button:{
     marginTop: '1rem',
+  },
+  deletar:{
+    backgroundColor: '#FF505F',
+    borderRadius: '50%',
+    position: 'absolute',
   }
 }));
 

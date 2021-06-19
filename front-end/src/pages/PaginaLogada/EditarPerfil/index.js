@@ -31,22 +31,20 @@ export default function EditarPerfil() {
       return;
     }
     
-
     setCarregando(true);
     setErro('');
 
     try {
         const resposta = await fetch('https://desafio-m03.herokuapp.com/perfil', {
-            method: 'PUT',
-            body: JSON.stringify(data),
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                'Content-type': 'application/json'
-            }
-            });
+          method: 'PUT',
+          body: JSON.stringify(data),
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            'Content-type': 'application/json'
+          }
+          });
         
         const dados = await resposta.json();
-        console.log(resposta, dados);
 
         setCarregando(false);
 
@@ -71,43 +69,47 @@ export default function EditarPerfil() {
       <NavBar/>
       
       <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Typography variant="h3">
-          {usuario.nome_loja}
-        </Typography>
-        <Typography variant="h4">
-          Editar Perfil
-        </Typography>
-        
-        <form 
-            className={classes.root}
+        <div className={classes.toolbar} >
+          <Typography variant="h3">
+            {usuario.nome_loja}
+          </Typography>
+          <Typography variant="h4">
+            Editar Perfil
+          </Typography>
+          
+          <form 
+            className={classes.toolbar}
             noValidate
             autoComplete="off"
             onSubmit={handleSubmit(onSubmit)}
-        >
+          >
             <div className={classes.inputs}>
-                <TextField label="Seu nome" {...register('nome')} />
-                <TextField label="Nome da loja" {...register('nome_loja')} />
-                <TextField label="Email" {...register('email')} />
-                <TextField label="Nova senha" {...register('senha')} type="password"
-                  onChange={(e) => setSenha1(e.target.value)} />
-                <TextField label="Repita a nova senha"  {...register('senhaConfirmacao')} type="password"
-                  onChange={(e) => setSenha2(e.target.value)} />
-            
+              <TextField label="Seu nome" {...register('nome')} />
+              <TextField label="Nome da loja" {...register('nome_loja')} />
+              <TextField label="Email" {...register('email')} />
+              <TextField label="Nova senha" {...register('senha')} type="password"
+                onChange={(e) => setSenha1(e.target.value)} />
+              <TextField label="Repita a nova senha"  {...register('senhaConfirmacao')} type="password"
+                onChange={(e) => setSenha2(e.target.value)} />
+          
 
               <Divider/>
               
-              <Button color="primary" onClick={() => history.push("/perfil")}>
-                Cancelar
-              </Button>
-              <Button variant="contained" color="primary" type="submit">
-                Editar perfil
-              </Button>
+              <div className={classes.ladoalado}>
+                <Button color="primary" onClick={() => history.push("/perfil")}>
+                  Cancelar
+                </Button>
+                <Button variant="contained" color="primary" type="submit">
+                  Editar perfil
+                </Button>
+              </div>
+
               
             </div>
                 
-            
-        </form>
+              
+          </form>
+        </div>
 
         {erro && <Alert severity="error">{erro}</Alert>}
         {carregando && <CircularProgress />}

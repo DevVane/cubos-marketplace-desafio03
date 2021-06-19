@@ -10,7 +10,6 @@ import useStyles from './styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteSweepIcon from '@material-ui/icons/DeleteSweep';
 
@@ -35,7 +34,8 @@ export default function PaginaLogada() {
 
 
   async function carregarProdutos() {
-
+    setCarregando(true);
+    setErro('');
     try {
       const resposta = await fetch('https://desafio-m03.herokuapp.com/produtos', {
             method: 'GET',
@@ -47,16 +47,16 @@ export default function PaginaLogada() {
         
         const produtosApi = await resposta.json();
 
-        
+        setCarregando(false);
+
         if(!resposta.ok){
             setErro(produtosApi);
             return;
         }
-      console.log(produtosApi);
+     
       setProdutos(produtosApi);
 
     } catch (error) {
-      console.log(error.message);
       setErro(error.message);
     }
   }
@@ -66,7 +66,7 @@ export default function PaginaLogada() {
   }, []);
 
   function AlertDialog({produtoId}) {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
   
     const handleClickOpen = () => {
       setOpen(true);
@@ -76,14 +76,15 @@ export default function PaginaLogada() {
     };
     const handleDelete = async () => {
       setCarregando(true);
+
       try {
         const resposta = await fetch(`https://desafio-m03.herokuapp.com/produtos/${produtoId}`, {
-              method: 'DELETE',
-              headers: {
-                "Authorization": `Bearer ${token}`
-  
-              }
-            });
+          method: 'DELETE',
+          headers: {
+            "Authorization": `Bearer ${token}`
+
+          }
+        });
           
           const dados = await resposta.json();
           setCarregando(false);
@@ -92,19 +93,19 @@ export default function PaginaLogada() {
               setErro(dados);
               return;
           }
-        console.log(dados);
-        carregarProdutos();
-        setOpen(false);
-      } catch (error) {
-        console.log(error.message);
-        setErro(error.message);
-      }
       
+        carregarProdutos();
+        
+      } catch (error) {
+        setErro(error.message);
+        
+      }
+      setOpen(false);
     };
   
     return (
       <div>
-        <Button variant="contained" color="secondary" onClick={handleClickOpen}>
+        <Button className={classes.deletar} onClick={handleClickOpen}>
           <IconButton aria-label="remover produto">
             <DeleteSweepIcon/>
           </IconButton>
@@ -150,6 +151,8 @@ export default function PaginaLogada() {
           <div className={classes.cards}>
             {produtos.map( produto => (
               <Card key={produto.id} className={classes.card} >
+                <AlertDialog produtoId={produto.id}/>
+
                 <CardMedia
                   className={classes.media}
                   image={produto.imagem}
@@ -157,7 +160,7 @@ export default function PaginaLogada() {
                   onClick={()=> history.push(`/produto/${produto.id}/editar`)}
                 />
                 <CardContent onClick={()=> history.push(`/produto/${produto.id}/editar`)}>
-                  <Typography variant="body2" color="textPrimary" component="p">
+                  <Typography variant="h6" color="textPrimary">
                     {produto.nome}
                   </Typography>
                   <Typography variant="body2" color="textPrimary" component="p">
@@ -173,16 +176,14 @@ export default function PaginaLogada() {
                   </div>
 
                 </CardContent>
-                <CardActions disableSpacing>
-                  <AlertDialog produtoId={produto.id}/>
-                  
-                </CardActions>
+                
               </Card>
             ))}
+             {erro && <Alert severity="error">{erro}</Alert>}
+             {carregando && <CircularProgress />}
           </div>
         </div>
-        {erro && <Alert severity="error">{erro}</Alert>}
-        {carregando && <CircularProgress />}
+       
 
         <Divider/>
 
