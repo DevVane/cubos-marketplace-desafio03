@@ -27,6 +27,9 @@ export default function EditarProduto() {
   async function onSubmit(data) {
     setCarregando(true);
     setErro('');
+    
+    data.preco = data.preco * 100;
+    
 
     try {
         const resposta = await fetch(`https://desafio-m03.herokuapp.com/produtos/${id}`, {
@@ -80,7 +83,7 @@ export default function EditarProduto() {
         >
             <div className={classes.inputs}>
                 <TextField label="Nome do produto" {...register('nome')} />
-                <TextField label="Preço" {...register('preco')} />
+                <TextField label="Preço" type="number" step="any" min="0" {...register('preco')} />
                 <TextField label="Estoque" {...register('estoque')} />
                 <TextField label="Descrição do produto" {...register('descricao')} />
                 <TextField label="Imagem"  {...register('imagem')} />

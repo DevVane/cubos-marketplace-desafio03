@@ -15,7 +15,7 @@ export default function NavBar(){
     const classes = useStyles();
     const history = useHistory();
     const { setToken } = useAuthContext();
-
+    
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -29,20 +29,20 @@ export default function NavBar(){
             >
                 <div className={classes.toolbar} />
             
-                <List>
+                <List className={classes.icones}>
                     
-                    <Button color="primary" size="small"  onClick={() => history.push("/produtos")}>
-                        <IconButton>
+                    <Button color="primary"   onClick={() => history.push("/produtos") }>
+                        <IconButton  >
                             <StorefrontIcon/>
                         </IconButton>
                     </Button>
-                    <Button color="primary" size="small"  onClick={() => history.push("/perfil")}>
-                        <IconButton>
+                    <Button color="primary" onClick={() => { history.push("/perfil")}}>
+                        <IconButton size="medium">
                             <AccountCircleIcon/>
                         </IconButton>
                     </Button>
-                    <Button color="primary" size="small"  onClick={() => setToken(null)}>
-                        <IconButton>
+                    <Button color="primary"   onClick={() => setToken(null)}>
+                        <IconButton >
                             <CancelIcon />
                         </IconButton>
                     </Button>

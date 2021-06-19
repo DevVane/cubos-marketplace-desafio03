@@ -22,8 +22,16 @@ export default function EditarPerfil() {
   const [erro, setErro] = useState('');
   const [carregando, setCarregando] = useState(false);
   const { token, usuario} = useAuthContext();
+  const [senha1, setSenha1] = useState(null);
+  const [senha2, setSenha2] = useState(null);
 
   async function onSubmit(data) {
+    if(senha1 !== senha2){
+      setErro("As senhas não são iguais");
+      return;
+    }
+    
+
     setCarregando(true);
     setErro('');
 
@@ -81,8 +89,10 @@ export default function EditarPerfil() {
                 <TextField label="Seu nome" {...register('nome')} />
                 <TextField label="Nome da loja" {...register('nome_loja')} />
                 <TextField label="Email" {...register('email')} />
-                <TextField label="Nova senha" {...register('senha')} type="password" />
-                <TextField label="Repita a nova senha"  {...register('senhaConfirmacao')} type="password" />
+                <TextField label="Nova senha" {...register('senha')} type="password"
+                  onChange={(e) => setSenha1(e.target.value)} />
+                <TextField label="Repita a nova senha"  {...register('senhaConfirmacao')} type="password"
+                  onChange={(e) => setSenha2(e.target.value)} />
             
 
               <Divider/>

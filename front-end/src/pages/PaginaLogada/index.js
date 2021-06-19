@@ -3,6 +3,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
 import useStyles from './styles';
 
 import Card from '@material-ui/core/Card';
@@ -31,7 +33,6 @@ export default function PaginaLogada() {
   const [carregando, setCarregando] = useState(false);
   const { token, usuario } = useAuthContext();
 
-  const [open, setOpen] = useState(false);
 
   async function carregarProdutos() {
 
@@ -139,54 +140,61 @@ export default function PaginaLogada() {
       <NavBar/>
       
       <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Typography variant="h3">
-          {usuario.nome_loja}
-        </Typography>
-        <Typography variant="h4">
-          Seus produtos
-        </Typography>
-        <div className={classes.cards}>
-          {produtos.map( produto => (
-            <Card key={produto.id} className={classes.card} >
-              <CardMedia
-                className={classes.media}
-                image={produto.imagem}
-                title={produto.nome}
-                onClick={()=> history.push(`/produto/${produto.id}/editar`)}
-              />
-              <CardContent onClick={()=> history.push(`/produto/${produto.id}/editar`)}>
-                <Typography variant="body2" color="textPrimary" component="p">
-                  {produto.nome}
-                </Typography>
-                <Typography variant="body2" color="textPrimary" component="p">
-                  {produto.descricao}
-                </Typography>
-                <div className={classes.flex}>
-                  <Typography variant="body2" color="textSecondary" component="p">
-                    {produto.estoque} UNIDADE(S)
+        <div className={classes.toolbar} >
+          <Typography variant="h3">
+            {usuario.nome_loja}
+          </Typography>
+          <Typography variant="h4">
+            Seus produtos
+          </Typography>
+          <div className={classes.cards}>
+            {produtos.map( produto => (
+              <Card key={produto.id} className={classes.card} >
+                <CardMedia
+                  className={classes.media}
+                  image={produto.imagem}
+                  title={produto.nome}
+                  onClick={()=> history.push(`/produto/${produto.id}/editar`)}
+                />
+                <CardContent onClick={()=> history.push(`/produto/${produto.id}/editar`)}>
+                  <Typography variant="body2" color="textPrimary" component="p">
+                    {produto.nome}
                   </Typography>
                   <Typography variant="body2" color="textPrimary" component="p">
-                   R${produto.preco}
-                </Typography>
-                </div>
+                    {produto.descricao}
+                  </Typography>
+                  <div className={classes.flex}>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      {produto.estoque} UNIDADE(S)
+                    </Typography>
+                    <Typography variant="body2" color="textPrimary" component="p">
+                      R${produto.preco/100}
+                    </Typography>
+                  </div>
 
-              </CardContent>
-              <CardActions disableSpacing>
-                <AlertDialog produtoId={produto.id}/>
-                
-              </CardActions>
-            </Card>
-          ))}
+                </CardContent>
+                <CardActions disableSpacing>
+                  <AlertDialog produtoId={produto.id}/>
+                  
+                </CardActions>
+              </Card>
+            ))}
+          </div>
         </div>
+        {erro && <Alert severity="error">{erro}</Alert>}
+        {carregando && <CircularProgress />}
 
         <Divider/>
 
-        <Button variant="contained" size="small" color="primary" onClick={() => history.push("/produtos/novo")} >
+        <Button variant="contained" size="small" color="primary" 
+          className={classes.button}
+          onClick={() => history.push("/produtos/novo")} >
           Adicionar Produto
         </Button>
+
         
       </main>
+
     </div>
   );
 }

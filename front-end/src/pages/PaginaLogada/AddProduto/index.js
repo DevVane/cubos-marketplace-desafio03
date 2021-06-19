@@ -26,6 +26,8 @@ export default function AddProduto() {
     setCarregando(true);
     setErro('');
 
+    data.preco = data.preco * 100;
+    
     try {
         const resposta = await fetch('https://desafio-m03.herokuapp.com/produtos', {
             method: 'POST',
@@ -78,8 +80,8 @@ export default function AddProduto() {
 
             <div className={classes.inputs}>
               <TextField label="Nome do produto" {...register('nome')} />
-              <TextField label="Preço" {...register('preco')} />
-              <TextField label="Estoque" {...register('estoque')} />
+              <TextField label="Preço" placeholder='R$' {...register('preco')} />
+              <TextField label="Estoque" placeholder='Un'{...register('estoque')} />
               <TextField label="Descrição do produto"  {...register('descricao')} />
               <TextField label="Imagem"  {...register('imagem')} />
             

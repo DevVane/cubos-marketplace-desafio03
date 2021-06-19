@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    backgroundColor: '#434343',
+    borderBottomRightRadius: 30,
+    
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -24,10 +27,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
   },
-  navBar:{
-      display: 'grid',
-      
-  },
+  icones:{
+    display: 'grid',
+    placeContent: 'center'
+  }
 }));
 
 

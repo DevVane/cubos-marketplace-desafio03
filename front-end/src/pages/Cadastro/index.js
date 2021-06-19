@@ -6,9 +6,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import useStyles from './styles';
 
-
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+
 
 function Cadastro() {
   const classes = useStyles();
@@ -16,9 +16,17 @@ function Cadastro() {
   const history = useHistory();
   const [erro, setErro] = useState('');
   const [carregando, setCarregando] = useState(false);
+  const [senha1, setSenha1] = useState(null);
+  const [senha2, setSenha2] = useState(null);
+
 
 
   async function onSubmit(data) {
+    if(senha1 !== senha2){
+      setErro("As senhas não são iguais");
+      return;
+    }
+
     setCarregando(true);
     setErro('');
 
@@ -63,8 +71,10 @@ function Cadastro() {
       <TextField label="Seu nome" {...register('nome')} />
       <TextField label="Nome da loja" {...register('nome_loja')} />
       <TextField label="Email" {...register('email')} />
-      <TextField label="Senha" {...register('senha')} type="password" />
-      <TextField label="Repita a senha"  {...register('senhaConfirmacao')} type="password" />
+      <TextField label="Senha" {...register('senha')} type="password" 
+        onChange={(e) => setSenha1(e.target.value)}/>
+      <TextField label="Repita a senha"  {...register('senhaConfirmacao')} type="password" required 
+        onChange={(e) => setSenha2(e.target.value)}/>
       <Button variant="contained" color="primary" type="submit">
         Criar conta
       </Button>
