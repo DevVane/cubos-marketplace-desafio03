@@ -1,10 +1,8 @@
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import List from '@material-ui/core/List';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
 import useStyles from './styles';
@@ -28,26 +26,21 @@ export default function NavBar(){
                 anchor="left"
             >
                 <div className={classes.toolbar} />
+         
+                <div className={classes.icones}>
+                <IconButton  onClick={() => history.push("/produtos") }>
+                    <StorefrontIcon fontSize="large" />
+                </IconButton>
             
-                <List className={classes.icones}>
-                    
-                    <Button color="primary"   onClick={() => history.push("/produtos") }>
-                        <IconButton  >
-                            <StorefrontIcon/>
-                        </IconButton>
-                    </Button>
-                    <Button color="primary" onClick={() => { history.push("/perfil")}}>
-                        <IconButton size="medium">
-                            <AccountCircleIcon/>
-                        </IconButton>
-                    </Button>
-                    <Button color="primary"   onClick={() => setToken(null)}>
-                        <IconButton >
-                            <CancelIcon />
-                        </IconButton>
-                    </Button>
-                    
-                </List>
+                <IconButton onClick={() =>  history.push("/perfil")}>
+                    <AccountCircleIcon fontSize="large" />
+                </IconButton>
+            
+                <IconButton onClick={() => setToken(null)}>
+                    <CancelIcon fontSize="large"  />
+                </IconButton>
+                </div>
+                
                 
             </Drawer>
         </div>

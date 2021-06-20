@@ -26,6 +26,10 @@ export default function AddProduto() {
     setCarregando(true);
     setErro('');
 
+    if(data.preco.includes(',')){
+      data.preco = parseFloat(data.preco.replace(',', '.'));
+    }
+    
     data.preco = data.preco * 100;
     
     try {

@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icones:{
     display: 'grid',
+    gap: '1.5rem',
     placeContent: 'center'
   }
 }));

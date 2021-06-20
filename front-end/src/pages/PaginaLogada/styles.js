@@ -36,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#FF505F',
     borderRadius: '50%',
     position: 'absolute',
+  }, 
+  cardcontent:{
+    display: 'grid',
+    gap: '1rem',
   }
 }));
 

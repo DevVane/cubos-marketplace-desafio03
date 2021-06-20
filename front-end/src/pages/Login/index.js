@@ -44,7 +44,7 @@ function Login() {
         
         setToken(dados.token);
         setUsuario(dados.usuario);
-        console.log(dados);
+        
         
         history.push('/produtos');
       

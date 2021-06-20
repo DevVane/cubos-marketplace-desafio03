@@ -159,7 +159,7 @@ export default function PaginaLogada() {
                   title={produto.nome}
                   onClick={()=> history.push(`/produto/${produto.id}/editar`)}
                 />
-                <CardContent onClick={()=> history.push(`/produto/${produto.id}/editar`)}>
+                <CardContent className={classes.cardcontent} onClick={()=> history.push(`/produto/${produto.id}/editar`)}>
                   <Typography variant="h6" color="textPrimary">
                     {produto.nome}
                   </Typography>
